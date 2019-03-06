@@ -160,7 +160,7 @@ def addmedications(request):
 
 @login_required
 def edit_medication(request ,id):
-    medications = get_object_or_404(medication, pk=id)
+    medications = get_object_or_404(medication, pk=id)  
     if request.method == "POST":
         name_post = request.POST["name"]
         dosage_post= request.POST["dosage"]
