@@ -1,7 +1,7 @@
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect, reverse
 from django.template import RequestContext
 from website.forms import UserForm
 from website.models import medication
@@ -157,3 +157,19 @@ def addmedications(request):
     with connection.cursor() as cursor:
         cursor.execute("INSERT into website_medication VALUES(%s, %s, %s, %s, %s)", [id, name, dosage, deletedOn, patient_id])
         return HttpResponseRedirect(reverse('website:medications'))
+
+@login_required
+def edit_medication(request ,id):
+    medications = get_object_or_404(medication, pk=id)
+    if request.method == "POST":
+        name_post = request.POST["name"]
+        dosage_post= request.POST["dosage"]
+        medications.name = name_post
+        medications.dosage = dosage_post
+        medications.save()
+        return HttpResponseRedirect(reverse('website:medications'))
+
+
+    context = {'medication' : medications}
+    template_name = 'product/editmedication.html'
+    return render(request, template_name , context)

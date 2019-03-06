@@ -10,7 +10,7 @@
         <li> Name: {{medication.name}} <br>
             Dosage: {{medication.dosage}}<br>
             <a href="{% url 'website:deletemedication' id=medication.id %}" class="btn btn-danger mt-3 mr-3" role="button" style="width:150">Delete</a>
-            <button>Edit</button>
+            <a href="{% url 'website:editmedication' id=medication.id %}" class="btn btn-warning mt-3 mr-3" role="button" style="width:150">Edit</a>
         </li>
     {% endif %}
     {% endfor %}
