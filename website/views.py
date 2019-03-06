@@ -4,6 +4,12 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render
 from django.template import RequestContext
 from website.forms import UserForm
+from website.models import medication
+from django.db import connection
+from django.urls import reverse
+from website.forms import add_medication
+
+import datetime
 
 def index(request):
     template_name = 'index.html'
@@ -106,8 +112,48 @@ def doctors_appointments(request):
 
 @login_required
 def medications(request):
-    context ={}
+    user_id = request.user.id
+    medications = medication.objects.all().filter(deletedOn = None)
+
+    context = { 'medications': medications , 'user': user_id}
     return render(request, 'product/medications.html', context)
 
+@login_required
+def deletemedication(request, id):
+    date = datetime.date.today()
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute('''UPDATE website_medication
+                                SET deletedOn = %s
+                                where website_medication.id = %s''', [date, id])
+            return HttpResponseRedirect(reverse('website:medications'))
 
 
+
+    except medication.DoesNotExist:
+        raise Http404("medication does not exist")
+
+@login_required
+def addmedication(request):
+    context ={'name':'hello'}
+    return render(request, 'product/addmedication.html', context)
+
+@login_required
+def addmedications(request):
+
+    if request.method == 'GET':
+        medication_form = add_medication()
+        template_name = 'product/addmedication.html'
+        return render(request, template_name, {'medication_form': medication_form})
+
+
+    if request.method == "POST":
+        patient_id = request.user.id
+        name = request.POST["name"]
+        dosage = request.POST["dosage"]
+        id = None
+        deletedOn = None
+
+    with connection.cursor() as cursor:
+        cursor.execute("INSERT into website_medication VALUES(%s, %s, %s, %s, %s)", [id, name, dosage, deletedOn, patient_id])
+        return HttpResponseRedirect(reverse('website:medications'))

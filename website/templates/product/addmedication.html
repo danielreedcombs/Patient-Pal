@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content%}
+<html>
+    <h1> Add Medication</h1>
+    <form action="{% url 'website:addmedications' %}" method="post">
+            {% csrf_token %}
+            {{ medication_form.as_p }}
+        <input type="submit" value="Add medication" />
+    </form>
+</html>
+{% endblock %}
