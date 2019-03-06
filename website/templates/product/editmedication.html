@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<h2>{{ medication.name }}</h2>
+<form action="{% url 'website:editmedication' medication.id %}" method="POST">
+        {% csrf_token %}
+        <input type="text" value="{{medication.name}}" name="name" required=true>
+        <input type="text" value="{{medication.dosage}}" name="dosage" required=true>
+        <input type="submit" value="Save">
+</form>
+{% endblock content %}

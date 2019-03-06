@@ -15,5 +15,6 @@ urlpatterns = [
     path('medications', views.medications, name='medications'),
     path('addmedication', views.addmedications, name='addmedications'),
     path('deletemedication/<int:id>', views.deletemedication, name='deletemedication'),
+    path('editmedication/<int:id>/', views.edit_medication, name='editmedication'),
 
 ]
