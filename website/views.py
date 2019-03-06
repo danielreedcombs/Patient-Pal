@@ -3,9 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render
 from django.template import RequestContext
-
-from website.forms import UserForm, ProductForm
-from website.models import Product
+from website.forms import UserForm
 
 def index(request):
     template_name = 'index.html'
@@ -70,7 +68,7 @@ def login_user(request):
         # If authentication was successful, log the user in
         if authenticated_user is not None:
             login(request=request, user=authenticated_user)
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('home')
 
         else:
             # Bad login details were provided. So we can't log the user in.
@@ -91,33 +89,25 @@ def user_logout(request):
     return HttpResponseRedirect('/')
 
 
-def sell_product(request):
-    if request.method == 'GET':
-        product_form = ProductForm()
-        template_name = 'product/create.html'
-        return render(request, template_name, {'product_form': product_form})
+@login_required
+def homepage(request):
+    context ={}
+    return render(request, 'product/homepage.html', context)
 
-    elif request.method == 'POST':
-        form_data = request.POST
+@login_required
+def doctors_notes(request):
+    context ={}
+    return render(request, 'product/notes.html', context)
 
-        p = Product(
-            seller = request.user,
-            title = form_data['title'],
-            description = form_data['description'],
-            price = form_data['price'],
-            quantity = form_data['quantity'],
-        )
-        p.save()
-        template_name = 'product/success.html'
-        return render(request, template_name, {})
+@login_required
+def doctors_appointments(request):
+    context ={}
+    return render(request, 'product/appointments.html', context)
 
-def list_products(request):
-    all_products = Product.objects.all()
-    template_name = 'product/list.html'
-    return render(request, template_name, {'products': all_products})
-
-
-
+@login_required
+def medications(request):
+    context ={}
+    return render(request, 'product/medications.html', context)
 
 
 
