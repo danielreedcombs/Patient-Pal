@@ -8,10 +8,10 @@
     <h1>Welcome to Patient Pal</h1>
     {% if user.is_authenticated %}
     <h1> hello {{ user.username }}!</h1>
-    <a href="{% url 'website:logout' %}">Logout</a>
+    <a href="{% url 'website:logout' %}" class="btn btn-warning mt-3 mr-3" role="button" style="width:150">Logout</a>
     {% else %}
-    <div><a href="{% url 'website:register' %}">Register</a></div>
-    <div><a href="{% url 'website:login' %}">Login</a></div>
+    <div><a href="{% url 'website:register' %}" class="btn btn-info mt-3 mr-3" role="button" style="width:150">Register</a></div>
+    <div><a href="{% url 'website:login' %}" class="btn btn-info mt-3 mr-3" role="button" style="width:150">Login</a></div>
     {% endif %}
   </body>
 </html>

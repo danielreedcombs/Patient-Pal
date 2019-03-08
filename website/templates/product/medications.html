@@ -2,19 +2,26 @@
 {% load staticfiles %}
 {% block content %}
 <html>
-     <a href="{% url 'website:addmedications' %}" class="btn btn-info mt-3 mr-3" role="button" style="width:150">Add Medication</a>
-    <h1>Medications</h1>
-    <ul>
+    <link rel = "stylesheet" href="{% static 'index.css' %}"/>
+    <div class="centerButton">
+        <a href="{% url 'website:addmedications' %}" class="btn btn-info mt-3 mr-3" role="button" style="width:150">Add Medication</a>
+    </div>
+    <h1 class="centerButton">Medications</h1>
+    <div class="containers">
     {% for medication in medications %}
     {% if user == medication.patient_id %}
-        <li> Name: {{medication.name}} <br>
-            Dosage: {{medication.dosage}}<br>
-            <a href="{% url 'website:deletemedication' id=medication.id %}" class="btn btn-danger mt-3 mr-3" role="button" style="width:150">Delete</a>
-            <a href="{% url 'website:editmedication' id=medication.id %}" class="btn btn-warning mt-3 mr-3" role="button" style="width:150">Edit</a>
-        </li>
+        <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{medication.name}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">dosage</h6>
+                    <p class="card-text">{{medication.dosage}}</p>
+                    <a href="{% url 'website:deletemedication' id=medication.id %}" class="btn btn-warning mt-3 mr-3" role="button" style="width:150">Delete</a>
+                    <a href="{% url 'website:editmedication' id=medication.id %}" class="btn btn-info mt-3 mr-3" role="button" style="width:150">Edit</a>
+                </div>
+        </div>
     {% endif %}
     {% endfor %}
-    </ul>
+    </div>
 
 </html>
 {% endblock %}

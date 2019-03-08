@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect, reverse
 from django.template import RequestContext
 from website.forms import UserForm
-from website.models import medication
+from website.models import medication, doctors_visits
 from django.db import connection
 from django.urls import reverse
 from website.forms import add_medication
@@ -18,11 +18,6 @@ def index(request):
 
 # Create your views here.
 def register(request):
-    '''Handles the creation of a new user for authentication
-
-    Method arguments:
-      request -- The full HTTP request object
-    '''
 
     # A boolean value for telling the template whether the registration was successful.
     # Set to False initially. Code changes value to True when registration succeeds.
@@ -54,11 +49,6 @@ def register(request):
 
 
 def login_user(request):
-    '''Handles the creation of a new user for authentication
-
-    Method arguments:
-      request -- The full HTTP request object
-    '''
 
     # Obtain the context for the user's request.
     context = RequestContext(request)
@@ -107,7 +97,11 @@ def doctors_notes(request):
 
 @login_required
 def doctors_appointments(request):
-    context ={}
+    appointments = doctors_visits.objects.all().filter(deletedOn = None)
+    user_id = request.user.id
+    print("ID", user_id)
+    print("apointments", appointments.values())
+    context ={'appointments' : appointments , 'user' : user_id}
     return render(request, 'product/appointments.html', context)
 
 @login_required
@@ -173,3 +167,54 @@ def edit_medication(request ,id):
     context = {'medication' : medications}
     template_name = 'product/editmedication.html'
     return render(request, template_name , context)
+
+@login_required
+def edit_appointment(request, id):
+    appointments = get_object_or_404(doctors_visits, pk=id)
+    print(appointments)
+    if request.method == "POST":
+        name = request.POST["name"]
+        location = request.POST["location"]
+        date = request.POST["date"]
+        time = request.POST["time"]
+        appointments.doctors_name = name
+        appointments.location = location
+        appointments.date = date
+        appointments.time = time
+        appointments.save()
+        return HttpResponseRedirect(reverse('website:appointments'))
+
+
+    context = {'appointment' : appointments}
+    template_name = 'product/editappointments.html'
+    return render(request, template_name , context)
+
+@login_required
+def add_appointment(request):
+    user_id = request.user
+    if request.method == "POST":
+        new_appointment = doctors_visits(
+        doctors_name = request.POST["name"],
+        location = request.POST["location"],
+        date = request.POST["date"],
+        time = request.POST["time"],
+        patient = user_id,)
+        new_appointment.save()
+        return HttpResponseRedirect(reverse('website:appointments'))
+
+    template_name = 'product/addappointment.html'
+    return render(request, template_name)
+
+
+@login_required
+def delete_appointment(request, id):
+    date = datetime.date.today()
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute('''UPDATE website_doctors_visits
+                                SET deletedOn = %s
+                                where id = %s''', [date, id])
+        return HttpResponseRedirect(reverse('website:appointments'))
+
+    except appointments.DoesNotExist:
+        raise Http404("appointment does not exist")
