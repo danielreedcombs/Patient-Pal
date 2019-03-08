@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<h2>Add Appointment</h2>
+<form action="{% url 'website:addappointment' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" value="Doctors Name" name="name" required=true>
+        <input type="text" value="Address" name="location" required=true>
+        <input type="date" value="" name="date" required=true>
+        <input type="time" value="" name="time" required=true>
+        <input type="submit" value="Save">
+</form>
+{% endblock content %}

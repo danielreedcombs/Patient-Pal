@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<h2>Edit appointment with {{ appointment.doctors_name }}</h2>
+<form action="{% url 'website:editappointment' appointment.id %}" method="POST">
+        {% csrf_token %}
+        <input type="text" value="{{appointment.doctors_name}}" name="name" required=true>
+        <input type="text" value="{{appointment.location}}" name="location" required=true>
+        <input type="date" value="{{appointment.date}}" name="date" required=true>
+        <input type="time" value="{{appointment.time}}" name="time" required=true>
+        <input type="submit" value="Save">
+</form>
+{% endblock content %}

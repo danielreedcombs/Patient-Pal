@@ -8,3 +8,17 @@ nav {
   nav form:not(:last-child) {
     margin-right: 8px
   }
+
+  .containers{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+
+  .centerButton{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
