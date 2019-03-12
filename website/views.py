@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect, reverse
 from django.template import RequestContext
 from website.forms import UserForm
-from website.models import medication, doctors_visits
+from website.models import medication, doctors_visits, Notes, doctors_notes
 from django.db import connection
 from django.urls import reverse
 from website.forms import add_medication
@@ -91,17 +91,12 @@ def homepage(request):
     return render(request, 'product/homepage.html', context)
 
 @login_required
-def doctors_notes(request):
-    context ={}
-    return render(request, 'product/notes.html', context)
-
-@login_required
 def doctors_appointments(request):
-    appointments = doctors_visits.objects.all().filter(deletedOn = None)
     user_id = request.user.id
-    print("ID", user_id)
-    print("apointments", appointments.values())
-    context ={'appointments' : appointments , 'user' : user_id}
+    appointments = doctors_visits.objects.all().filter(deletedOn = None)
+    notes = doctors_notes.objects.all()
+    print("notes!@#!@#!@#!@#!",notes)
+    context ={'appointments' : appointments , 'user' : user_id , 'notes' : notes}
     return render(request, 'product/appointments.html', context)
 
 @login_required
@@ -218,3 +213,24 @@ def delete_appointment(request, id):
 
     except appointments.DoesNotExist:
         raise Http404("appointment does not exist")
+
+
+@login_required
+def add_note(request):
+    user_id = request.user
+    # .filter(user_id = user_id)
+    print("hello")
+    if request.method == 'GET':
+        appointments = doctors_visits.objects.filter(patient_id = user_id.id)
+        template_name = 'product/notes.html'
+        context = {'appointments': appointments , "user_id" : user_id}
+        print("yo appointments", appointments)
+        return render(request, template_name, context)
+
+    if request.method == "POST":
+        new_notes = Notes( user = user_id , note = request.POST["note"],)
+        new_notes.save()
+        newdoc = doctors_visits.objects.get(pk= request.POST["appointment"])
+        new_joint_table = doctors_notes(doctors_vist = newdoc , notes = new_notes,)
+        new_joint_table.save()
+        return HttpResponseRedirect(reverse('website:note'))

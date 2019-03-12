@@ -11,14 +11,20 @@
     {% for appointment in appointments %}
     {% if user == appointment.patient_id %}
         <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                  <h5 class="card-title">{{appointment.doctors_name}}</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">{{appointment.location}}</h6>
-                  <p class="card-text">time: {{appointment.time}}</p>
-                  <a href="{% url 'website:deleteappointment' appointment.id %}" class="btn btn-warning mt-3 mr-3" role="button" style="width:150">Delete</a>
-                  <a href="{% url 'website:editappointment' appointment.id %}" class="btn btn-info mt-3 mr-3" role="button" style="width:150">Edit</a>
-                </div>
-              </div>
+            <div class="card-body">
+                <h5 class="card-title">{{appointment.doctors_name}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{appointment.location}}</h6>
+                <p class="card-text">time: {{appointment.time}}</p>
+                <h6> Notes</h6>
+                {% for note in notes %}
+                {% if appointment.id == note.doctors_vist_id%}
+                <p>{{note.notes.note}}</p>
+                {% endif %}
+                {% endfor %}
+                <a href="{% url 'website:deleteappointment' appointment.id %}" class="btn btn-warning mt-3 mr-3" role="button" style="width:150">Delete</a>
+                <a href="{% url 'website:editappointment' appointment.id %}" class="btn btn-info mt-3 mr-3" role="button" style="width:150">Edit</a>
+            </div>
+        </div>
     {% endif %}
     {% endfor %}
     </div>

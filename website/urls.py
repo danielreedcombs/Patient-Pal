@@ -10,7 +10,6 @@ urlpatterns = [
     url(r'^logout$', views.user_logout, name='logout'),
     url(r'^register$', views.register, name='register'),
     path('home', views.homepage, name='home'),
-    path('notes', views.doctors_notes, name='notes'),
     path('appointments', views.doctors_appointments, name='appointments'),
     path('medications', views.medications, name='medications'),
     path('addmedication', views.addmedications, name='addmedications'),
@@ -19,5 +18,5 @@ urlpatterns = [
     path('editappointment/<int:id>/', views.edit_appointment, name='editappointment'),
     path('deleteappointment/<int:id>', views.delete_appointment, name='deleteappointment'),
     path('addappointment', views.add_appointment, name='addappointment'),
-
+    path('note', views.add_note, name='note'),
 ]
