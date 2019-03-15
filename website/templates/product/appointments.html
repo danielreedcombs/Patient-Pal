@@ -3,29 +3,28 @@
 {% block content %}
 <html>
     <link rel = "stylesheet" href="{% static 'index.css' %}"/>
-    <div class="centerButton">
-        <a href="{% url 'website:addappointment' %}" class="btn btn-info mt-3 mr-3 centerButton" role="button" style="width:150 center">Add Appointment</a>
-    </div>
     <h1 class="centerButton">Appointments</h1>
+        <div class="centerButton">
+            <a href="{% url 'website:addappointment' %}" class="btn btn-info mt-3 mr-3 centerButton" role="button" style="width:150 center">Add Appointment</a>
+        </div>
     <div class= "containers">
     {% for appointment in appointments %}
-    {% if user == appointment.patient_id %}
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">{{appointment.doctors_name}}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{appointment.location}}</h6>
-                <p class="card-text">time: {{appointment.time}}</p>
-                <h6> Notes</h6>
-                {% for note in notes %}
-                {% if appointment.id == note.doctors_vist_id%}
-                <p>{{note.notes.note}}</p>
-                {% endif %}
-                {% endfor %}
-                <a href="{% url 'website:deleteappointment' appointment.id %}" class="btn btn-warning mt-3 mr-3" role="button" style="width:150">Delete</a>
-                <a href="{% url 'website:editappointment' appointment.id %}" class="btn btn-info mt-3 mr-3" role="button" style="width:150">Edit</a>
+        {% if user == appointment.patient_id %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{appointment.doctors_name}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{appointment.location}}</h6>
+                    <p class="card-text">time: {{appointment.time}}</p>
+                    {% for note in notes %}
+                    {% if appointment.id == note.doctors_vist_id%}
+                    <a href="{% url 'website:appointmentNotes' id=appointment.id %}" class="btn btn-warning mt-3 mr-3" role="button" style="width:150">Note</a>
+                    {% endif %}
+                    {% endfor %}
+                    <a href="{% url 'website:deleteappointment' appointment.id %}" class="btn btn-secondary mt-3 mr-3" role="button" style="width:150">Delete</a>
+                    <a href="{% url 'website:editappointment' appointment.id %}" class="btn btn-info mt-3 mr-3" role="button" style="width:150">Edit</a>
+                </div>
             </div>
-        </div>
-    {% endif %}
+        {% endif %}
     {% endfor %}
     </div>
 </html>
