@@ -9,10 +9,10 @@ This web application is created for medical patients needing a way to keep track
 
 Students, you are inheriting a basic implementation that provides the following features:
 
-1. User registration 
-1. User login 
-1. User logout 
-1. Adding a product 
+1. User registration
+1. User login
+1. User logout
+1. Adding a product
 1. Listing products
 
 Please consult the backlog of issues and work with your product owner to implement the top priority tickets for your sprints.
@@ -29,7 +29,7 @@ Please consult the backlog of issues and work with your product owner to impleme
 ### Screen Shots
 
 
-
+![SS1](/source/images/SS2.png)
 
 
 
