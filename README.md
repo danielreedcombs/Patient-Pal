@@ -29,9 +29,11 @@ Please consult the backlog of issues and work with your product owner to impleme
 ### Screen Shots
 
 
-![SS1](website/static/images/SS2.png)
+![SS1](website/static/images/SS1.png)
+![SS5](website/static/images/SS5.png)
+![SS2](website/static/images/SS2.png)
+![SS3](website/static/images/SS3.png)
+![SS4](website/static/images/SS4.png)
 
 
-### Form Helpers
 
-Django has many built-in [helper tags and filters](https://docs.djangoproject.com/en/1.10/ref/templates/builtins/) when building the site templates. We strongly recommend reading this documentation while building your templates.
