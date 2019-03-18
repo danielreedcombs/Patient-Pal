@@ -29,10 +29,7 @@ Please consult the backlog of issues and work with your product owner to impleme
 ### Screen Shots
 
 
-![SS1](/source/images/SS2.png)
-
-
-
+![SS1](/static/images/SS2.png)
 
 
 ### Form Helpers
