@@ -9,10 +9,10 @@ This web application is created for medical patients needing a way to keep track
 
 Students, you are inheriting a basic implementation that provides the following features:
 
-1. User registration 
-1. User login 
-1. User logout 
-1. Adding a product 
+1. User registration
+1. User login
+1. User logout
+1. Adding a product
 1. Listing products
 
 Please consult the backlog of issues and work with your product owner to implement the top priority tickets for your sprints.
@@ -29,12 +29,11 @@ Please consult the backlog of issues and work with your product owner to impleme
 ### Screen Shots
 
 
+![SS1](website/static/images/SS1.png)
+![SS5](website/static/images/SS5.png)
+![SS2](website/static/images/SS2.png)
+![SS3](website/static/images/SS3.png)
+![SS4](website/static/images/SS4.png)
 
 
 
-
-
-
-### Form Helpers
-
-Django has many built-in [helper tags and filters](https://docs.djangoproject.com/en/1.10/ref/templates/builtins/) when building the site templates. We strongly recommend reading this documentation while building your templates.
