@@ -2,10 +2,13 @@
 {% load staticfiles %}
 {% block content %}
 <html>
+<link rel = "stylesheet" href="{% static 'index.css' %}"/>
+
     <h1> Notes</h1>
     <form action="{% url 'website:note' %}" class="box" method="POST">
+        <div class="form-group-lg">
         {% csrf_token %}
-        <input type="text" value="Note" name="note" required=true>
+            <input class="form-control" style="height:50px" type="text" value="Note" name="note" required=true>
             <select name="appointment" id="note_appointment">
                 {% for appointment in appointments %}
                     {% if appointment.deletedOn == None %}
@@ -14,6 +17,7 @@
                 {% endfor %}
             </select>
         <input type="submit" value="Save">
+        </div>
     </form>
 </html>
 {% endblock %}

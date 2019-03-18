@@ -15,29 +15,15 @@ def index(request):
     template_name = 'index.html'
     return render(request, template_name, {})
 
-
-# Create your views here.
 def register(request):
-
-    # A boolean value for telling the template whether the registration was successful.
-    # Set to False initially. Code changes value to True when registration succeeds.
     registered = False
-
-    # Create a new user by invoking the `create_user` helper method
-    # on Django's built-in User model
     if request.method == 'POST':
         user_form = UserForm(data=request.POST)
 
         if user_form.is_valid():
-            # Save the user's form data to the database.
             user = user_form.save()
-
-            # Now we hash the password with the set_password method.
-            # Once hashed, we can update the user object.
             user.set_password(user.password)
             user.save()
-
-            # Update our variable to tell the template registration was successful.
             registered = True
 
         return login_user(request)
@@ -49,39 +35,26 @@ def register(request):
 
 
 def login_user(request):
-
-    # Obtain the context for the user's request.
     context = RequestContext(request)
-
-    # If the request is a HTTP POST, try to pull out the relevant information.
     if request.method == 'POST':
-
-        # Use the built-in authenticate method to verify
         username=request.POST['username']
         password=request.POST['password']
         authenticated_user = authenticate(username=username, password=password)
 
-        # If authentication was successful, log the user in
         if authenticated_user is not None:
             login(request=request, user=authenticated_user)
             return HttpResponseRedirect('home')
 
         else:
-            # Bad login details were provided. So we can't log the user in.
             print("Invalid login details: {}, {}".format(username, password))
             return HttpResponse("Invalid login details supplied.")
 
 
     return render(request, 'login.html', {}, context)
 
-# Use the login_required() decorator to ensure only those logged in can access the view.
 @login_required
 def user_logout(request):
-    # Since we know the user is logged in, we can now just log them out.
     logout(request)
-
-    # Take the user back to the homepage. Is there a way to not hard code
-    # in the URL in redirects?????
     return HttpResponseRedirect('/')
 
 
@@ -94,8 +67,7 @@ def homepage(request):
 def doctors_appointments(request):
     user_id = request.user.id
     appointments = doctors_visits.objects.all().filter(deletedOn = None)
-    notes = doctors_notes.objects.all()
-    print("notes!@#!@#!@#!@#!",notes)
+    notes = doctors_notes.objects.all().filter(deletedOn=None)
     context ={'appointments' : appointments , 'user' : user_id , 'notes' : notes}
     return render(request, 'product/appointments.html', context)
 
@@ -166,7 +138,6 @@ def edit_medication(request ,id):
 @login_required
 def edit_appointment(request, id):
     appointments = get_object_or_404(doctors_visits, pk=id)
-    print(appointments)
     if request.method == "POST":
         name = request.POST["name"]
         location = request.POST["location"]
@@ -218,13 +189,10 @@ def delete_appointment(request, id):
 @login_required
 def add_note(request):
     user_id = request.user
-    # .filter(user_id = user_id)
-    print("hello")
     if request.method == 'GET':
         appointments = doctors_visits.objects.filter(patient_id = user_id.id)
         template_name = 'product/notes.html'
         context = {'appointments': appointments , "user_id" : user_id}
-        print("yo appointments", appointments)
         return render(request, template_name, context)
 
     if request.method == "POST":
@@ -234,3 +202,34 @@ def add_note(request):
         new_joint_table = doctors_notes(doctors_vist = newdoc , notes = new_notes,)
         new_joint_table.save()
         return HttpResponseRedirect(reverse('website:note'))
+
+
+@login_required
+def appointment_notes(request, id):
+    notes = doctors_notes.objects.all().filter(deletedOn=None)
+    appointment = id
+    context= {'notes' : notes , 'appointment' : appointment}
+    template_name = 'product/appointmentNote.html'
+    return render(request, template_name , context)
+
+@login_required
+def note_delete(request, id):
+    date = datetime.date.today()
+    user_id = request.user.id
+    joint_table= get_object_or_404(doctors_notes, id = id)
+    joint_table.deletedOn = date
+    joint_table.save()
+    note = get_object_or_404(Notes, id= joint_table.notes_id )
+    note.deletedOn = date
+    note.save()
+    # try:
+    #     with connection.cursor() as cursor:
+    #         cursor.execute('''UPDATE website_doctors_notes
+    #                             SET deletedOn = %s
+    #                             where notes_id = %s;
+	# 							''', [date, id, date, user_id])
+    #     return HttpResponseRedirect(reverse('website:appointments'))
+
+    # except appointments.DoesNotExist:
+    #     raise Http404("appointment does not exist")
+    return HttpResponseRedirect(reverse('website:appointments'))

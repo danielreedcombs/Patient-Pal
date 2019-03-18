@@ -19,4 +19,6 @@ urlpatterns = [
     path('deleteappointment/<int:id>', views.delete_appointment, name='deleteappointment'),
     path('addappointment', views.add_appointment, name='addappointment'),
     path('note', views.add_note, name='note'),
+    path('appointmentNotes/<int:id>', views.appointment_notes, name='appointmentNotes'),
+    path('noteDelete/<int:id>', views.note_delete, name='noteDelete'),
 ]

@@ -3,10 +3,10 @@
 {% block content %}
 <html>
     <link rel = "stylesheet" href="{% static 'index.css' %}"/>
-    <div class="centerButton">
-        <a href="{% url 'website:addmedications' %}" class="btn btn-info mt-3 mr-3" role="button" style="width:150">Add Medication</a>
-    </div>
-        <h1 class="centerButton">Medications</h1>
+    <h1 class="centerButton">Medications</h1>
+        <div class="centerButton">
+            <a href="{% url 'website:addmedications' %}" class="btn btn-info mt-3 mr-3" role="button" style="width:150">Add Medication</a>
+        </div>
         <div class="containers">
         {% for medication in medications %}
             {% if user == medication.patient_id %}

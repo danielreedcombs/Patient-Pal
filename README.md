@@ -3,6 +3,11 @@
 This web application is created for medical patients needing a way to keep track of appointments, medications, and keeping notes to ask there doctor questions. It is powered by Python and Django.
 
 Students, you are inheriting a basic implementation that provides the following features:
+# Patient-Pal
+
+This web application is created for medical patients needing a way to keep track of appointments, medications, and keeping notes to ask there doctor questions. It is powered by Python and Django.
+
+Students, you are inheriting a basic implementation that provides the following features:
 
 1. User registration 
 1. User login 
