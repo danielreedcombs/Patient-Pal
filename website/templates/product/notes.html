@@ -3,8 +3,10 @@
 {% block content %}
 <html>
 <link rel = "stylesheet" href="{% static 'index.css' %}"/>
-
-    <h1> Notes</h1>
+<div class="addnotes">
+    <img src="{% static 'images/note.png' %}" width="90px" height="60px">
+    <h1> Add Notes</h1>
+</div>
     <form action="{% url 'website:note' %}" class="box" method="POST">
         <div class="form-group-lg">
         {% csrf_token %}

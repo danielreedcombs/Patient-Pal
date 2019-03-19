@@ -7,7 +7,7 @@
     {% for note in notes %}
     {% if note.doctors_vist_id == appointment %}
     <li>{{note.notes.note}}<br>
-            <a href="{% url 'website:noteDelete' note.id %}" class="btn btn-secondary mt-3 mr-3" role="button" style="width:150">delete</a>
+            <a href="{% url 'website:noteDelete' note.id %}" class="btn btn-secondary mt-3 mr-3" role="button" style="width:150"><img src="{% static 'images/garbage.png' %}" width="90px" height="60px">delete</a>
     </li>
     {% endif %}
     {% endfor %}
