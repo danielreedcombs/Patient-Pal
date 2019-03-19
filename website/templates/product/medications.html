@@ -13,9 +13,13 @@
                 <div class="card" style="width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title">{{medication.name}}</h5>
+                            <img src="{% static 'images/pills.png' %}" width="90px" height="60px">
+                            <br>
+                            </br>
                             <h6 class="card-subtitle mb-2 text-muted">dosage</h6>
                             <p class="card-text">{{medication.dosage}}</p>
-                            <a href="{% url 'website:deletemedication' id=medication.id %}" class="btn btn-warning mt-3 mr-3" role="button" style="width:150">Delete</a>
+                            <a href="{% url 'website:deletemedication' id=medication.id %}" class="btn btn-warning mt-3 mr-3" role="button" style="width:150"><img src="{% static 'images/garbage.png' %}" width="90px" height="60px">
+                                Delete</a>
                             <a href="{% url 'website:editmedication' id=medication.id %}" class="btn btn-info mt-3 mr-3" role="button" style="width:150">Edit</a>
                         </div>
                 </div>

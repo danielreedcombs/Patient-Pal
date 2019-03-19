@@ -222,14 +222,4 @@ def note_delete(request, id):
     note = get_object_or_404(Notes, id= joint_table.notes_id )
     note.deletedOn = date
     note.save()
-    # try:
-    #     with connection.cursor() as cursor:
-    #         cursor.execute('''UPDATE website_doctors_notes
-    #                             SET deletedOn = %s
-    #                             where notes_id = %s;
-	# 							''', [date, id, date, user_id])
-    #     return HttpResponseRedirect(reverse('website:appointments'))
-
-    # except appointments.DoesNotExist:
-    #     raise Http404("appointment does not exist")
     return HttpResponseRedirect(reverse('website:appointments'))
