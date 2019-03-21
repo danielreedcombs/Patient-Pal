@@ -2,14 +2,17 @@
 {% load staticfiles %}
 {% block content%}
 <html>
-        <div class="jumbotron jumbotron-fluid">
-                <div class="container">
-                  <h1 class="display-4">Patient Pal</h1>
-                  <h5 class="lead">Be Healthy.</h5>
-                  <h5 class="lead">Be Happy.</h5>
+    <link rel = "stylesheet" href="{% static 'index.css' %}"/>
+  <body class="backgroundc">
+    <div class="jumbotron jumbotron-fluid addnotes">
+      <div class="container">
+        <h1 class="display-4">Patient Pal</h1>
+        <h3 class="lead">Be Healthy.</h3>
+        <h3 class="lead">Be Happy.</h3>
 
-                </div>
-              </div>
-        </div>
+      </div>
+    </div>
+  </div>
+</body>
 </html>
 {% endblock%}

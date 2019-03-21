@@ -37,3 +37,14 @@ nav {
   flex-wrap: wrap;
 
 }
+
+.navcolor{
+  background-color:#F4C095 !important
+}
+
+.edit{
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: 1D7874;
+}

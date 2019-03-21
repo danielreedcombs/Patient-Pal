@@ -2,7 +2,8 @@
 {% load staticfiles %}
 {% block content %}
 <h2>Edit appointment with {{ appointment.doctors_name }}</h2>
-<form action="{% url 'website:editappointment' appointment.id %}" method="POST">
+        <link rel = "stylesheet" href="{% static 'index.css' %}"/>
+        <form action="{% url 'website:editappointment' appointment.id %}" method="POST">
         {% csrf_token %}
         <input type="text" value="{{appointment.doctors_name}}" name="name" required=true>
         <input type="text" value="{{appointment.location}}" name="location" required=true>

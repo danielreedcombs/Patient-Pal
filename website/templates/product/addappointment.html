@@ -2,7 +2,8 @@
 {% load staticfiles %}
 {% block content %}
 <h2>Add Appointment</h2>
-<form action="{% url 'website:addappointment' %}" method="POST">
+        <link rel = "stylesheet" href="{% static 'index.css' %}"/>
+        <form action="{% url 'website:addappointment' %}" method="POST">
         {% csrf_token %}
         <input type="text" value="Doctors Name" name="name" required=true>
         <input type="text" value="Address" name="location" required=true>

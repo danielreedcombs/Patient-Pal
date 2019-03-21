@@ -2,15 +2,25 @@
 {% load staticfiles %}
 {% block content %}
 <html>
-<h3>Notes</h3>
-<ul>
+    <link rel = "stylesheet" href="{% static 'index.css' %}"/>
+<h3 class="containers">Notes</h3>
+
+<div class="containers">
+
     {% for note in notes %}
     {% if note.doctors_vist_id == appointment %}
-    <li>{{note.notes.note}}<br>
-            <a href="{% url 'website:noteDelete' note.id %}" class="btn btn-secondary mt-3 mr-3" role="button" style="width:150"><img src="{% static 'images/garbage.png' %}" width="90px" height="60px">delete</a>
-    </li>
-    {% endif %}
-    {% endfor %}
-</ul>
+    <div class="card addnotes" style="width: 18rem;">
+            <div class="card-body">
+                <img src="{% static 'images/note.png' %}" width="120px" height="90px">
+                <br>
+                </br>
+                <h6 class="card-subtitle mb-2">{{note.notes.note}}</h6>
+                <a href="{% url 'website:noteDelete' note.id %}" class="btn btn-danger mt-3 mr-3" role="button" style="width:150"><img src="{% static 'images/garbage.png' %}" width="90px" height="60px">delete</a>
+                <a href="{% url 'website:appointments' %}" class="btn btn-dark mt-3 mr-3" role="button" style="width:150"><img src="{% static 'images/back.png' %}" width="90px" height="60px">Back</a>
+             </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+</div>
 </html>
 {% endblock %}

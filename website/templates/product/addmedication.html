@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% block content%}
 <html>
+    <link rel = "stylesheet" href="{% static 'index.css' %}"/>
     <h1> Add Medication</h1>
     <form action="{% url 'website:addmedications' %}" method="post">
             {% csrf_token %}

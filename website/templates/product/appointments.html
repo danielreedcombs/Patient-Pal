@@ -10,22 +10,20 @@
     <div class= "containers">
     {% for appointment in appointments %}
         {% if user == appointment.patient_id %}
-            <div class="card" style="width: 18rem;">
+            <div class="card addnotes" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">{{appointment.doctors_name}}</h5>
                     <img src="{% static 'images/doctor.png' %}" width="120px" height="90px">
                     <br>
                     </br>
-                    <h6 class="card-subtitle mb-2 text-muted">{{appointment.location}}</h6>
+                    <h6 class="card-subtitle mb-2">{{appointment.location}}</h6>
                     <p class="card-text">time: {{appointment.time}}</p>
-                        {% for note in notes %}
-                        {% if appointment.id == note.doctors_vist_id%}
-                        <a href="{% url 'website:appointmentNotes' id=appointment.id %}" class="btn btn-warning mt-3 mr-3" role="button" style="width:150"><img src="{% static 'images/note.png' %}" width="90px" height="60px">Note</a>
-                        {% endif %}
-                        {% endfor %}
-                        <a href="{% url 'website:deleteappointment' appointment.id %}" class="btn btn-secondary mt-3 mr-3" role="button" style="width:150"><img src="{% static 'images/garbage.png' %}" width="90px" height="60px">
+
+                        <a href="{% url 'website:appointmentNotes' id=appointment.id %}" class="btn btn-warning mt-3 mr-3" role="button" style="width:150"><img src="{% static 'images/note.png' %}" width="90px" height="60px">Notes</a>
+
+                        <a href="{% url 'website:deleteappointment' appointment.id %}" class="btn btn-danger mt-3 mr-3" role="button" style="width:150"><img src="{% static 'images/garbage.png' %}" width="90px" height="60px">
                             Delete</a>
-                        <a href="{% url 'website:editappointment' appointment.id %}" class="btn btn-info mt-3 mr-3" role="button" style="width:150">Edit</a>
+                        <a href="{% url 'website:editappointment' appointment.id %}" class="btn btn-dark mt-3 mr-3" role="button" style="width:150">Edit</a>
                 </div>
             </div>
         {% endif %}
