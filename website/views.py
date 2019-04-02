@@ -202,7 +202,7 @@ def delete_appointment(request, id):
     except appointments.DoesNotExist:
         raise Http404("appointment does not exist")
 
-
+    
 @login_required
 def add_note(request):
     user_id = request.user
@@ -226,7 +226,7 @@ def appointment_notes(request, id):
     notes = doctors_notes.objects.all().filter(deletedOn=None)
     appointment = id
     context= {'notes' : notes , 'appointment' : appointment}
-    template_name = 'product/appointmentNote.html'  
+    template_name = 'product/appointmentNote.html'
     return render(request, template_name , context)
 
 

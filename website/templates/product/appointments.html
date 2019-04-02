@@ -17,7 +17,8 @@
                     <br>
                     </br>
                     <h6 class="card-subtitle mb-2">{{appointment.location}}</h6>
-                    <p class="card-text">time: {{appointment.time}}</p>
+                    <p class="card-text">{{appointment.date}}</p>
+                    <p class="card-text">{{appointment.time}}</p>
 
                         <a href="{% url 'website:appointmentNotes' id=appointment.id %}" class="btn btn-warning mt-3 mr-3" role="button" style="width:150"><img src="{% static 'images/note.png' %}" width="90px" height="60px">Notes</a>
 
