@@ -10,6 +10,7 @@ from django.urls import reverse
 from website.forms import add_medication
 import datetime
 
+#  lines 14 - 54 control logging in and out of accounts
 def index(request):
     template_name = 'index.html'
     return render(request, template_name, {})
@@ -57,14 +58,14 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
 
-
+#  provides homepage with data needed to render
 @login_required
 def homepage(request):
     context ={}
     #this renders the generic homepage
     return render(request, 'product/homepage.html', context)
 
-
+#  Provides Appointments page data to render for individual user
 @login_required
 def doctors_appointments(request):
     #grabbing the spacific user
@@ -76,7 +77,7 @@ def doctors_appointments(request):
     context ={'appointments' : appointments , 'user' : user_id , 'notes' : notes}
     return render(request, 'product/appointments.html', context)
 
-
+#  Provides Medications page to render with data for individual logged in user
 @login_required
 def medications(request):
     # getting the users information
@@ -124,7 +125,7 @@ def addmedications(request):
         cursor.execute("INSERT into website_medication VALUES(%s, %s, %s, %s, %s)", [id, name, dosage, deletedOn, patient_id])
         return HttpResponseRedirect(reverse('website:medications'))
 
-
+#  code that exchanges new values for the "name" and "dosage" column in the SQL file for the Id number of a medication.
 @login_required
 def edit_medication(request ,id):
     # get the individual medication with the Id that was passed down.
@@ -143,7 +144,7 @@ def edit_medication(request ,id):
     template_name = 'product/editmedication.html'
     return render(request, template_name , context)
 
-
+#  code that exchanges new values for the "name", "location", "date", and "time" column in the SQL file for the Id number of a appointment.
 @login_required
 def edit_appointment(request, id):
     # get the individual appointment that has the Id that was passed down to the method.
@@ -202,7 +203,7 @@ def delete_appointment(request, id):
     except appointments.DoesNotExist:
         raise Http404("appointment does not exist")
 
-    
+
 @login_required
 def add_note(request):
     user_id = request.user
